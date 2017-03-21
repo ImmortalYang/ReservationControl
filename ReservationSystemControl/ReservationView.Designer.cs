@@ -70,6 +70,6 @@
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel calendarPanel;
+        internal System.Windows.Forms.TableLayoutPanel calendarPanel;
     }
 }
