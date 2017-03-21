@@ -18,6 +18,7 @@ namespace ReservationSystemControl
             this.Dock = DockStyle.Fill;
             this.Text = this.ToString();
             this.TextAlign = ContentAlignment.MiddleCenter;
+            this.BackColor = Color.Azure;
         }
 
         public override string ToString()

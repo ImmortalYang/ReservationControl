@@ -35,7 +35,9 @@ namespace ReservationSystemControl
         {
             List<Reservation> list = new List<Reservation>();
             //Read reservations from file
-            list.Add(new Reservation(id: 0, resourceID: 1, startDate: DateTime.Today, guestName: "John") { EndDate = DateTime.Today.AddDays(6) });
+            list.Add(new Reservation(id: 0, resourceID: 1, startDate: DateTime.Today, guestName: "John Zhang") { EndDate = DateTime.Today.AddDays(6) });
+            list.Add(new Reservation(id: 1, resourceID: 0, startDate: new DateTime(2017, 3, 23), guestName: "John Key"));
+            list.Add(new Reservation(id: 2, resourceID: 2, startDate: new DateTime(2017, 3, 25), guestName: "Bill English"));
             return list;
         }
 

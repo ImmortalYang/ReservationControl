@@ -26,5 +26,6 @@ namespace ReservationSystemControl
             if (this.reservation.ReservationID == null) return "";
             else return this.reservation.guestName;
         }
+
     }
 }
