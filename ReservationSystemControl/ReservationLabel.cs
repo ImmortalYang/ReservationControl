@@ -16,15 +16,15 @@ namespace ReservationSystemControl
         {
             this.reservation = reserv;
             this.Dock = DockStyle.Fill;
-            this.Text = this.ToString();
             this.TextAlign = ContentAlignment.MiddleCenter;
             this.BackColor = Color.CadetBlue;
+            this.Name = reserv.ReservationID?.ToString();
+            this.Text = this.ToString();
         }
 
         public override string ToString()
         {
-            if (this.reservation.ReservationID == null) return "";
-            else return this.reservation.guestName;
+            return this.reservation.ReservationID + " " +this.reservation.GuestName;
         }
 
     }
