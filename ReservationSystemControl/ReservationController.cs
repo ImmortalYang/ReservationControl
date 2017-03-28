@@ -123,6 +123,7 @@ namespace ReservationSystemControl
                 {
                     if(reservID == null)
                         reserv.ReservationID = Reservation.maxID++;
+                    AddReservation(reserv);
                     //Save the ID to Name property of reservation label as key for search in the future
                     reservLbl.Name = reserv.ReservationID.ToString();
                     calendarPanel.Controls.Add(reservLbl, columnOfStartDate, reservRow);
@@ -234,10 +235,10 @@ namespace ReservationSystemControl
             
         }
 
-        public void ModifyReservation(Reservation reserv)
+        public void AddReservation(Reservation reserv)
         {
-            //Reservation theReservation = this.reservationList.Single(r => r.ReservationID == reserv.ReservationID);
-            //theReservation = reserv;
+            if(!reservationList.Contains(reserv))
+                reservationList.Add(reserv);
         }
 
         public string GetResourceNameFromID(int resourceID)

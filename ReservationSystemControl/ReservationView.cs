@@ -55,7 +55,6 @@ namespace ReservationSystemControl
             string message;
             if(theController.ValidateReservation(currentReservation, out message))
             {
-                theController.ModifyReservation(currentReservation);
                 MessageBox.Show(message);
                 theController.SetReservLabelToPanel(this.calendarPanel, this.currentReservLbl);
             }
