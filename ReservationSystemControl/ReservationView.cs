@@ -114,6 +114,10 @@ namespace ReservationSystemControl
             theController.SetColumnHeader(this.calendarPanel, this.currentCalendarDate);
             theController.ClearTableContent(this.calendarPanel);
             theController.SetTableContent(this.calendarPanel);
+            foreach (Control control in this.calendarPanel.Controls)
+            {
+                control.MouseClick += ControlLbl_Click;
+            }
             this.calendarPanel.ResumeLayout();
         }
 
