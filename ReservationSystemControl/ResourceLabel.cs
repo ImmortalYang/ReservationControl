@@ -11,8 +11,15 @@ namespace ReservationSystemControl
     public class ResourceLabel: Label
     {
         public Resource resource;
+        public ResourceLabel() : base()
+        {
+            this.Dock = DockStyle.Fill;
+            this.Text = this.ToString();
+            this.TextAlign = ContentAlignment.MiddleCenter;
+            this.BackColor = Color.NavajoWhite;
+        }
 
-        public ResourceLabel(Resource resource): base()
+        public ResourceLabel(Resource resource): this()
         {
             this.resource = resource;
             this.Dock = DockStyle.Fill;
@@ -23,7 +30,9 @@ namespace ReservationSystemControl
 
         public override string ToString()
         {
-            return this.resource.Name;
+            if (this.resource != null)
+                return this.resource.Name;
+            else return base.ToString();
         }
     }
 }

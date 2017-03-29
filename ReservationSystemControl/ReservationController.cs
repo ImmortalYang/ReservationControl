@@ -43,14 +43,16 @@ namespace ReservationSystemControl
         /// <summary>
         /// Set the column header of tableLayoutPanel
         /// </summary>
-        /// <param name="startDate">The date value of the first column</param>
-        public void SetColumnHeader(TableLayoutPanel calendarPanel)
+        /// <param name="date">The date value of the first column</param>
+        public void SetColumnHeader(TableLayoutPanel calendarPanel, DateTime date)
         {
             int row = 0;
-            DateTime date = DateTime.Today;
+            
             for (int col = 1; col < calendarPanel.ColumnCount; col++)
             {
-                calendarPanel.Controls.Add(new DateTimeLabel(date), col, row);
+                DateTimeLabel dtLbl = calendarPanel.GetControlFromPosition(col, row) as DateTimeLabel;
+                dtLbl.date = date;
+                dtLbl.Text = dtLbl.ToString();
                 date = date.AddDays(1);
             }
         }
@@ -64,7 +66,9 @@ namespace ReservationSystemControl
             int maxRow = calendarPanel.RowCount < resourceList.Count + 1 ? calendarPanel.RowCount : resourceList.Count + 1;
             for (int row = 1; row < maxRow; row++)
             {
-                calendarPanel.Controls.Add(new ResourceLabel(resourceList[row - 1]), col, row);
+                ResourceLabel rscLbl = calendarPanel.GetControlFromPosition(col, row) as ResourceLabel;
+                rscLbl.resource = resourceList[row - 1];
+                rscLbl.Text = rscLbl.ToString();
             }
         }
 
@@ -152,7 +156,7 @@ namespace ReservationSystemControl
         }
 
         /// <summary>
-        /// Clear all reservations from the table and in the data.
+        /// Clear all reservations from the table.
         /// </summary>
         /// <param name="calendarPanel"></param>
         public void ClearTableContent(TableLayoutPanel calendarPanel)
@@ -164,6 +168,14 @@ namespace ReservationSystemControl
                 if (controlCollection[i] is ReservationLabel)
                     controlCollection.RemoveAt(i);
             }
+            
+        }
+
+        /// <summary>
+        /// Clear all reservations in the data.
+        /// </summary>
+        public void ClearReservations()
+        {
             this.reservationList.Clear();
         }
 

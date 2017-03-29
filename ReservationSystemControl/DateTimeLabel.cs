@@ -11,19 +11,24 @@ namespace ReservationSystemControl
     public class DateTimeLabel: Label
     {
         public DateTime date;
-
-        public DateTimeLabel(DateTime date): base()
+        public DateTimeLabel() : base()
         {
-            this.date = date;
             this.Dock = DockStyle.Fill;
             this.Text = this.ToString();
             this.TextAlign = ContentAlignment.MiddleCenter;
             this.BackColor = Color.Azure;
         }
 
+        public DateTimeLabel(DateTime date): this()
+        {
+            this.date = date;  
+        }
+
         public override string ToString()
         {
-            return this.date.ToShortDateString() + "\r\n" + this.date.DayOfWeek.ToString();
+            if (this.date != null)
+                return this.date.ToShortDateString() + "\r\n" + this.date.DayOfWeek.ToString();
+            else return base.ToString();
         }
     }
 }

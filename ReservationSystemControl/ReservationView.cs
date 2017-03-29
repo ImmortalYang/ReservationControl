@@ -15,12 +15,13 @@ namespace ReservationSystemControl
         private ReservationController theController;
         private ReservationLabel currentReservLbl;
         private Reservation currentReservation;
+        private DateTime currentCalendarDate = DateTime.Today;
 
         public ReservationView()
         {
             InitializeComponent();
             theController = new ReservationController(this);
-            theController.SetColumnHeader(this.calendarPanel);
+            theController.SetColumnHeader(this.calendarPanel, currentCalendarDate);
             theController.SetRowHeader(this.calendarPanel);
             theController.SetTableContent(this.calendarPanel);
             foreach(Control control in this.calendarPanel.Controls)
@@ -70,6 +71,7 @@ namespace ReservationSystemControl
                 == DialogResult.OK)
             {
                 theController.ClearTableContent(this.calendarPanel);
+                theController.ClearReservations();
             }
         }
 
@@ -103,6 +105,36 @@ namespace ReservationSystemControl
             this.dateStart.Enabled = true;
             this.btnSave.Enabled = true;
             this.btnDelete.Enabled = true;
+        }
+
+        private void ScrollCalendarView(int days)
+        {
+            this.calendarPanel.SuspendLayout();
+            this.currentCalendarDate = this.currentCalendarDate.AddDays(days);
+            theController.SetColumnHeader(this.calendarPanel, this.currentCalendarDate);
+            theController.ClearTableContent(this.calendarPanel);
+            theController.SetTableContent(this.calendarPanel);
+            this.calendarPanel.ResumeLayout();
+        }
+
+        private void btnPrevDay_Click(object sender, EventArgs e)
+        {
+            this.ScrollCalendarView(days: -1);
+        }
+
+        private void btnNextDay_Click(object sender, EventArgs e)
+        {
+            this.ScrollCalendarView(days: 1);
+        }
+
+        private void btnPrevWeek_Click(object sender, EventArgs e)
+        {
+            this.ScrollCalendarView(days: -7);
+        }
+
+        private void btnNextWeek_Click(object sender, EventArgs e)
+        {
+            this.ScrollCalendarView(days: 7);
         }
     }
 }
