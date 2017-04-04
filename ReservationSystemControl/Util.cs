@@ -16,8 +16,8 @@ namespace ReservationSystemControl
         /// The original version was not an extention method.
         /// Documentation is not included from original code.
         /// </summary>
-        /// <param name="tlp"></param>
-        /// <param name="point"></param>
+        /// <param name="tlp">table layout panel</param>
+        /// <param name="point">the point from which the row and col index is calculated</param>
         /// <returns></returns>
         public static Point? GetRowColIndex(this TableLayoutPanel tlp, Point point)
         {

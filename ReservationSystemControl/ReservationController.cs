@@ -14,6 +14,10 @@ namespace ReservationSystemControl
         public List<Reservation> reservationList;
         public List<Resource> resourceList;
 
+        /// <summary>
+        /// Initialize an instance of ReservationController
+        /// </summary>
+        /// <param name="newView">The interface that the controller controls</param>
         public ReservationController(ReservationView newView)
         {
             this.calendarView = newView;
@@ -21,6 +25,10 @@ namespace ReservationSystemControl
             resourceList = this.loadResources();
         }
 
+        /// <summary>
+        /// Load a list of resources to the controller
+        /// </summary>
+        /// <returns></returns>
         public List<Resource> loadResources()
         {
             List<Resource> resourceList = new List<Resource>();
@@ -30,13 +38,17 @@ namespace ReservationSystemControl
             return resourceList;
         }
 
+        /// <summary>
+        /// Load a list of existing reservations to the controller
+        /// </summary>
+        /// <returns></returns>
         public List<Reservation> loadReservations()
         {
             List<Reservation> list = new List<Reservation>();
             //Read reservations from file
-            list.Add(new Reservation(resourceID: 1, startDate: new DateTime(2017, 3, 29), endDate: new DateTime(2017, 4, 2), guestName: "John Zhang"));
-            list.Add(new Reservation(resourceID: 0, startDate: new DateTime(2017, 3, 29), endDate: new DateTime(2017, 4, 1), guestName: "John Key"));
-            list.Add(new Reservation(resourceID: 2, startDate: new DateTime(2017, 3, 28), endDate: new DateTime(2017, 4, 3), guestName: "Bill English"));
+            list.Add(new Reservation(resourceID: 1, startDate: new DateTime(2017, 4, 11), endDate: new DateTime(2017, 4, 12), guestName: "John Zhang"));
+            list.Add(new Reservation(resourceID: 0, startDate: new DateTime(2017, 4, 11), endDate: new DateTime(2017, 4, 15), guestName: "John Key"));
+            list.Add(new Reservation(resourceID: 2, startDate: new DateTime(2017, 4, 11), endDate: new DateTime(2017, 4, 30), guestName: "Bill English"));
             return list;
         }
 
@@ -95,8 +107,8 @@ namespace ReservationSystemControl
             Reservation reserv = reservLbl.reservation;
             int? reservID = reserv.ReservationID;
             //Find the row number of the resource of the reservation
-            int reservRow = FindRowByResourceID(calendarPanel, reserv.ResourceID);
-            if (reservRow != -1)
+            int? reservRow = FindRowByResourceID(calendarPanel, reserv.ResourceID);
+            if (reservRow != null)
             {
                 int columnOfStartDate = FindColumnByDate(calendarPanel, reserv.StartDate); 
                 int columnOfEndDate = FindColumnByDate(calendarPanel, reserv.EndDate);
@@ -121,7 +133,7 @@ namespace ReservationSystemControl
                 calendarPanel.SetColumnSpan(reservLbl, colspan);
                 if (calendarPanel.Controls.Contains(reservLbl))
                 { //existing reservation
-                    calendarPanel.SetCellPosition(reservLbl, new TableLayoutPanelCellPosition(columnOfStartDate, reservRow));
+                    calendarPanel.SetCellPosition(reservLbl, new TableLayoutPanelCellPosition(columnOfStartDate, reservRow.Value));
                 }
                 else //new reservation
                 {
@@ -130,7 +142,7 @@ namespace ReservationSystemControl
                     AddReservation(reserv);
                     //Save the ID to Name property of reservation label as key for search in the future
                     reservLbl.Name = reserv.ReservationID.ToString();
-                    calendarPanel.Controls.Add(reservLbl, columnOfStartDate, reservRow);
+                    calendarPanel.Controls.Add(reservLbl, columnOfStartDate, reservRow.Value);
                 }
                 reservLbl.Text = reservLbl.ToString();
                 //Resume layout to display result on calendar table
@@ -146,6 +158,7 @@ namespace ReservationSystemControl
         /// <param name="reservLbl"></param>
         public void DeleteReservation(TableLayoutPanel calendarPanel, ReservationLabel reservLbl)
         {
+            //Return if the reservation is not saved yet
             if (!calendarPanel.Controls.Contains(reservLbl))
             {
                 MessageBox.Show("Please save the reservation first.", "Error");
@@ -153,6 +166,7 @@ namespace ReservationSystemControl
             }
             this.reservationList.Remove(reservLbl.reservation);
             calendarPanel.Controls.Remove(reservLbl);
+            this.calendarView.ClearEditPanel();
         }
 
         /// <summary>
@@ -203,15 +217,15 @@ namespace ReservationSystemControl
         /// </summary>
         /// <param name="calendarPanel"></param>
         /// <param name="resourceID"></param>
-        /// <returns>The row number. -1 if not found</returns>
-        private int FindRowByResourceID(TableLayoutPanel calendarPanel, int resourceID)
+        /// <returns>The row number. Null if not found</returns>
+        private int? FindRowByResourceID(TableLayoutPanel calendarPanel, int resourceID)
         {
             for(int row = 1; row < calendarPanel.RowCount; row++)
             {
                 ResourceLabel resourceLbl = (ResourceLabel)calendarPanel.GetControlFromPosition(0, row);
                 if (resourceLbl.resource.ResourceID == resourceID) return row;
             }
-            return -1;
+            return null;
         }
 
         /// <summary>
@@ -222,11 +236,13 @@ namespace ReservationSystemControl
         /// <returns>True if valid. False if invalid.</returns>
         public bool ValidateReservation(Reservation reserv, out string message)
         {
+            //Guest name is empty
             if(reserv.GuestName == "")
             {
                 message = "Please enter guest name.";
                 return false;
             }
+            //Start date not precede to end date
             if(reserv.EndDate <= reserv.StartDate)
             {
                 message = "Start date must precede to end date.";
@@ -241,18 +257,27 @@ namespace ReservationSystemControl
                 message = "Date conflict with other reservation";
                 return false;
             }
-
+            //Validation success
             message = "Success";
             return true;
             
         }
 
+        /// <summary>
+        /// Add a new reservation to reservations list
+        /// </summary>
+        /// <param name="reserv"></param>
         public void AddReservation(Reservation reserv)
         {
             if(!reservationList.Contains(reserv))
                 reservationList.Add(reserv);
         }
 
+        /// <summary>
+        /// Search for a resource from it's ID and return the name
+        /// </summary>
+        /// <param name="resourceID">resource ID</param>
+        /// <returns>resource name</returns>
         public string GetResourceNameFromID(int resourceID)
         {
             return this.resourceList
