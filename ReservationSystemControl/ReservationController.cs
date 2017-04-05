@@ -274,6 +274,22 @@ namespace ReservationSystemControl
         }
 
         /// <summary>
+        /// Modify a reservation
+        /// </summary>
+        /// <param name="reserv"></param>
+        public void ModifyReservation(Reservation reserv)
+        {
+            var reservation = this.reservationList.SingleOrDefault(r => r.ReservationID == reserv.ReservationID);
+            if (reservation != null) {
+                reservation.GuestName = reserv.GuestName;
+                reservation.StartDate = reserv.StartDate;
+                reservation.EndDate = reserv.EndDate;
+                reservation.TotalPrice = reserv.TotalPrice;
+                reservation.CreditCardNumber = reserv.CreditCardNumber;
+            }
+        }
+
+        /// <summary>
         /// Search for a resource from it's ID and return the name
         /// </summary>
         /// <param name="resourceID">resource ID</param>

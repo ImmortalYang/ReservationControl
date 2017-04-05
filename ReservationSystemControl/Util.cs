@@ -14,7 +14,6 @@ namespace ReservationSystemControl
         /// Use GetColumnWidths and GetRowHeights methods to calculate the cell row and column index from a given point.
         /// This method is copied from http://stackoverflow.com/questions/15449504/how-do-i-determine-the-cell-being-clicked-on-in-a-tablelayoutpanel
         /// The original version was not an extention method.
-        /// Documentation is not included from original code.
         /// </summary>
         /// <param name="tlp">table layout panel</param>
         /// <param name="point">the point from which the row and col index is calculated</param>

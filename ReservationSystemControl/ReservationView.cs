@@ -67,16 +67,22 @@ namespace ReservationSystemControl
         /// <param name="e"></param>
         private void btnSave_Click(object sender, EventArgs e)
         {
-            currentReservation.GuestName = txtCustomer.Text;
-            currentReservation.StartDate = dateStart.Value;
-            currentReservation.EndDate = dateEnd.Value;
+            Reservation tempNewReserv = new Reservation(currentReservation);
+            tempNewReserv.GuestName = txtCustomer.Text;
+            tempNewReserv.StartDate = dateStart.Value;
+            tempNewReserv.EndDate = dateEnd.Value;
             string message;
             //Validate current reservation
-            if(theController.ValidateReservation(currentReservation, out message))
+            if(theController.ValidateReservation(tempNewReserv, out message))
             {
                 //success
                 MessageBox.Show(message);
+                currentReservation = tempNewReserv;
+                currentReservLbl.reservation = currentReservation;
+                //change the calendar table
                 theController.SetReservLabelToPanel(this.calendarPanel, this.currentReservLbl);
+                //change the data
+                theController.ModifyReservation(currentReservation);
             }
             else
             {
@@ -99,6 +105,7 @@ namespace ReservationSystemControl
                 theController.ClearTableContent(this.calendarPanel);
                 //Clear data
                 theController.ClearReservations();
+                this.ClearEditPanel();
             }
         }
 
