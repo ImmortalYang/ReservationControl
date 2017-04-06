@@ -48,15 +48,8 @@ namespace ReservationSystemControl
                 currentReservLbl = sender as ReservationLabel;
                 currentReservation = currentReservLbl.reservation;
                 //Display the selected reservation information in the edit panel
-                this.lblResource.Text = theController.GetResourceNameFromID(currentReservation.ResourceID);
-                this.txtCustomer.Text = currentReservation.GuestName;
-                this.txtCustomer.Enabled = true;
-                this.dateStart.Value = currentReservation.StartDate;
-                this.dateStart.Enabled = true;
-                this.dateEnd.Value = currentReservation.EndDate;
-                this.dateEnd.Enabled = true;
-                this.btnSave.Enabled = true;
-                this.btnDelete.Enabled = true;
+                DisplayReservationDetail();
+                EnableEditPanel();
             }
         }
 
@@ -136,14 +129,29 @@ namespace ReservationSystemControl
             DateTimeLabel dtLbl = calendarPanel.GetControlFromPosition(position.Value.X, 0) as DateTimeLabel;
             DateTime startDate = dtLbl.date;
             DateTime endDate = startDate.AddDays(1);
-            this.lblResource.Text = theController.GetResourceNameFromID(resourceID);
-            this.txtCustomer.Text = "";
-            this.dateStart.Value = startDate;
-            this.dateEnd.Value = endDate;
             this.currentReservation = new Reservation(resourceID, startDate, endDate);
             this.currentReservLbl = new ReservationLabel(currentReservation);
             currentReservLbl.MouseClick += this.ControlLbl_Click;
-            //Enable editing
+            DisplayReservationDetail();
+            EnableEditPanel();
+        }
+
+        /// <summary>
+        /// Display the reservation detail on panel
+        /// </summary>
+        private void DisplayReservationDetail()
+        {
+            this.lblResource.Text = theController.GetResourceNameFromID(currentReservation.ResourceID);
+            this.txtCustomer.Text = currentReservation.GuestName;
+            this.dateStart.Value = currentReservation.StartDate;
+            this.dateEnd.Value = currentReservation.EndDate;
+        }
+
+        /// <summary>
+        /// Enable editing
+        /// </summary>
+        private void EnableEditPanel()
+        {
             this.txtCustomer.Enabled = true;
             this.dateEnd.Enabled = true;
             this.dateStart.Enabled = true;
