@@ -8,6 +8,9 @@ using System.Drawing;
 
 namespace ReservationSystemControl
 {
+    /// <summary>
+    /// A subclass of label associating a DateTime
+    /// </summary>
     public class DateTimeLabel: Label
     {
         public DateTime date;

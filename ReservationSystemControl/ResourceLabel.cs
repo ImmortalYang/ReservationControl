@@ -8,6 +8,9 @@ using System.Drawing;
 
 namespace ReservationSystemControl
 {
+    /// <summary>
+    /// A subclass of label associating a resource
+    /// </summary>
     public class ResourceLabel: Label
     {
         public Resource resource;

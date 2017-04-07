@@ -8,6 +8,9 @@ using System.Windows.Forms;
 
 namespace ReservationSystemControl
 {
+    /// <summary>
+    /// The controller of the program
+    /// </summary>
     public class ReservationController
     {
         private ReservationView calendarView;

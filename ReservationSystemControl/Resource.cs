@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ReservationSystemControl
 {
+    /// <summary>
+    /// Entity class for resource
+    /// </summary>
     public class Resource
     {
         private static int maxID = 0;

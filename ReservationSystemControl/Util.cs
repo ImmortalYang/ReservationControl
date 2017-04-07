@@ -8,6 +8,9 @@ using System.Windows.Forms;
 
 namespace ReservationSystemControl
 {
+    /// <summary>
+    /// Util class to store extension methods
+    /// </summary>
     public static class Util
     {
         /// <summary>

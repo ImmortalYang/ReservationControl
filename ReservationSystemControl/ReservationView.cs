@@ -10,6 +10,9 @@ using System.Windows.Forms;
 
 namespace ReservationSystemControl
 {
+    /// <summary>
+    /// The interface of the program
+    /// </summary>
     public partial class ReservationView: System.Windows.Forms.UserControl
     {
         private ReservationController theController;

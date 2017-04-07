@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ReservationSystemControl
 {
+    /// <summary>
+    /// Entity class for reservation
+    /// </summary>
     public class Reservation
     {
         //properties
