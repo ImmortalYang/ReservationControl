@@ -124,6 +124,10 @@ namespace ReservationSystemControl
                     {
                         calendarPanel.Controls.Remove(reservLbl);
                     }
+                    else //new reservation, but not in the view
+                    {
+                        AddReservation(reserv);
+                    }
                     return;
                 }
                 //How many columns does the reservation label occupy
